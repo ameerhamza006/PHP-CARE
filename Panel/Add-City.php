@@ -1,5 +1,7 @@
 <?php require_once "header.php"; 
 
+$error->Find('City Added Successfully','City Not added Something wrong','City Delete Successfully','City Not deleted Something wrong ','City Update Successfully',' City Not Updated somthing wrong');
+
 if(isset($_GET['Edit'])){
 	
 $get_id = $_GET['Edit'];
@@ -307,16 +309,16 @@ $get_id = $_GET['Edit'];
                         </div>
 
 
-<?php }else { ?>
+<?php }else { 
+
+$fun->Add_City();
+
+?>
 
 <div class="basic-form-area mg-b-15">
-	
                 <div class="container-fluid">
-					<?php $fun->Add_City(); $error->Find('City Added Successfully','City Not added Something wrong','City Delete Successfully','City Not deleted Something wrong ','City Update Successfully',' City Not Updated somthing wrong');  ?>
-					
                     <div class="row">
-
- <div class="col-lg-6">
+                       <div class="col-lg-6">
                             <div class="sparkline8-list basic-res-b-30 shadow-reset">
                                 <div class="sparkline8-hd">
                                     <div class="main-sparkline8-hd">

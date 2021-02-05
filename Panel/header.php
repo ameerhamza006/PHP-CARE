@@ -86,41 +86,35 @@
                 <div class="left-custom-menu-adp-wrap">
                     <ul class="nav navbar-nav left-sidebar-menu-pro">
                         <li class="nav-item">
-                            <a href="index.php"  class="nav-link dropdown-toggle"><i class="fa big-icon fa-home"></i> <span class="mini-dn">Home</span> </a>
+                            <a href="index"  class="nav-link dropdown-toggle"><i class="fa big-icon fa-home"></i> <span class="mini-dn">Home</span> </a>
 							
                         </li>
                         <li class="nav-item"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="fa big-icon fa-envelope"></i> <span class="mini-dn">Doctors</span> <span class="indicator-right-menu mini-dn"><i class="fa indicator-mn fa-angle-left"></i></span></a>
                             <div role="menu" class="dropdown-menu left-menu-dropdown animated flipInX">
-                                <a href="Add-Doctor.php" class="dropdown-item">Add Doctor</a>
-                                <a href="Add-Doctor.php?List" class="dropdown-item">View Doctor</a>
+                                <a href="Add-Doctor" class="dropdown-item">Add Doctor</a>
+                                <a href="Add-Doctor?List" class="dropdown-item">View Doctor</a>
                                 
                             </div>
                         </li>
                         <li class="nav-item"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="fa big-icon fa-flask"></i> <span class="mini-dn">Cities</span> <span class="indicator-right-menu mini-dn"><i class="fa indicator-mn fa-angle-left"></i></span></a>
                             <div role="menu" class="dropdown-menu left-menu-dropdown animated flipInX">
-                                <a href="Add-City.php" class="dropdown-item">Add City</a>
-                                <a href="Add-City.php" class="dropdown-item">View City</a>
+                                <a href="Add-City" class="dropdown-item">Add City</a>
+                                <a href="Add-City" class="dropdown-item">View City</a>
                                 
                             </div>
                         </li>
-                        <li class="nav-item"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="fa big-icon fa-pie-chart"></i> <span class="mini-dn">Miscellaneous</span> <span class="indicator-right-menu mini-dn"><i class="fa indicator-mn fa-angle-left"></i></span></a>
+                        <li class="nav-item"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="fa big-icon fa-pie-chart"></i> <span class="mini-dn">Availability</span> <span class="indicator-right-menu mini-dn"><i class="fa indicator-mn fa-angle-left"></i></span></a>
                             <div role="menu" class="dropdown-menu left-menu-dropdown animated flipInX">
-                                <a href="profile.html" class="dropdown-item">Profile</a>
-                                <a href="contact-client.html" class="dropdown-item">Contact Client</a>
-                                <a href="contact-client-v.1.html" class="dropdown-item">Contact Client v.1</a>
-                                <a href="project-list.html" class="dropdown-item">Project List</a>
-                                <a href="project-details.html" class="dropdown-item">Project Details</a>
+                                <a href="Availability" class="dropdown-item">Add Availability</a>
+                                <a href="Availability?List" class="dropdown-item">View Availability</a>
+                                
                             </div>
                         </li>
-                        <li class="nav-item"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="fa big-icon fa-bar-chart-o"></i> <span class="mini-dn">Charts</span> <span class="indicator-right-menu mini-dn"><i class="fa indicator-mn fa-angle-left"></i></span></a>
+                        <li class="nav-item"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="fa big-icon fa-bar-chart-o"></i> <span class="mini-dn">Social Links</span> <span class="indicator-right-menu mini-dn"><i class="fa indicator-mn fa-angle-left"></i></span></a>
                             <div role="menu" class="dropdown-menu left-menu-dropdown chart-left-menu-std animated flipInX">
-                                <a href="bar-charts.html" class="dropdown-item">Bar Charts</a>
-                                <a href="line-charts.html" class="dropdown-item">Line Charts</a>
-                                <a href="area-charts.html" class="dropdown-item">Area Charts</a>
-                                <a href="rounded-chart.html" class="dropdown-item">Rounded Charts</a>
-                                <a href="c3.html" class="dropdown-item">C3 Charts</a>
-                                <a href="sparkline.html" class="dropdown-item">Sparkline Charts</a>
-                                <a href="peity.html" class="dropdown-item">Peity Charts</a>
+                                <a href="Social-Links" class="dropdown-item">Add Social Links</a>
+                                <a href="Social-Links?List" class="dropdown-item">View Social Links</a>
+                               
                             </div>
                         </li>
                         <li class="nav-item"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="fa big-icon fa-table"></i> <span class="mini-dn">Data Tables</span> <span class="indicator-right-menu mini-dn"><i class="fa indicator-mn fa-angle-left"></i></span></a>
