@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
   
@@ -28,7 +29,36 @@
 
     <!-- Template Style -->
     <link rel="stylesheet" href="css/style.css" />
+<?php require_once "database/class.php";
+	
+	$db = new db();
+	$crud = new CRUD();
+	$fun = new functionality();
+	$error = new errors();
+	
+  if(isset($_SESSION['EmailUser'])){
 
+  $session = $_SESSION['EmailUser'];
+
+  $se = $crud->Update_get_by_id('*','users'," where email='$session' ");
+
+  $se_id = $se['id'];
+  $se_firstname = $se['firstname'];
+  $se_lastname = $se['lastname'];
+  $se_email = $se['email'];
+  $se_phone = $se['phone'];
+  $se_city = $se['cityname'];
+  $se_password = $se['password'];
+  $se_address = $se['address'];
+  $se_state = $se['state'];
+  $se_zip = $se['zip'];
+
+
+
+
+
+  }
+	?>
   </head>
 
   <body>
@@ -79,7 +109,7 @@
             <div class="navbar-collapse collapse">
               <ul class="nav navbar-nav">
                  <li class="nav-item active">
-                  <a class="nav-link" href="index.php">
+                  <a class="nav-link" href="http://localhost:82/PHP-CARE/">
                     Home
                   </a>
                 </li>
@@ -94,42 +124,24 @@
                   <ul class="dropdown-menu megamenu dropdown-menu-lg">
                     <li>
                       <div class="row">
-                        <div class="col-sm-4">
-                          <h6 class="mb-3 nav-title">Pages</h6>
+						 
+						  <?php $data = $crud->View('*',' specialities ','','ORDER BY id DESC'); 
+						  
+						  foreach($data as $doctor){
+							  
+						  
+						  
+						  ?>
+                        <div class="col-sm-3">
+                          
                           <ul class="list-unstyled mt-lg-3">
-                            <li><a class="dropdown-item" href="about-us.html">About Us</a></li>
-                            <li><a class="dropdown-item" href="about-me.html">About Me</a></li>
-                            <li><a class="dropdown-item" href="team.html">Team</a></li>
-                            <li><a class="dropdown-item" href="team-single.html">Team Single</a></li>
-                            <li><a class="dropdown-item" href="gallery.html">Gallery</a></li>
-                            <li><a class="dropdown-item" href="before-after.html">Before After</a></li>
-                            <li><a class="dropdown-item" href="before-after.html">Before After</a></li>
-                            <li><a class="dropdown-item" href="before-after.html">Before After</a></li>
-                            <li><a class="dropdown-item" href="before-after.html">Before After</a></li>
+                            <li><a class="dropdown-item" href="Doctors?Specialist=<?php echo $doctor['specialitie_name']; ?>"><?php echo $doctor['specialitie_name']; ?> </a></li>
+                           
                           </ul>
                         </div>
-                        <div class="col-sm-4">
-                          <h6 class="mb-3 nav-title">Pages</h6>
-                          <ul class="list-unstyled mt-lg-3">
-                            <li><a class="dropdown-item" href="pricing.html">Pricing</a></li>
-                            <li><a class="dropdown-item" href="faqs.html">Faqs</a></li>
-                            <li><a class="dropdown-item" href="appointment.html">Appointment</a></li>
-                            <li><a class="dropdown-item" href="cost-calculator.html">Cost Calculator</a></li>
-                            <li><a class="dropdown-item" href="timetable.html">Timetable</a></li>
-                            <li><a class="dropdown-item" href="working-hours.html">Working Hours</a></li>
-                          </ul>
-                        </div>
-                        <div class="col-sm-4">
-                          <h6 class="mb-3 nav-title">Pages</h6>
-                          <ul class="list-unstyled mt-lg-3">
-                            <li><a class="dropdown-item" href="login.html">Login</a></li>
-                            <li><a class="dropdown-item" href="register.html">Register</a></li>
-                            <li><a class="dropdown-item" href="error-404.html">Error 404</a></li>
-                            <li><a class="dropdown-item" href="coming-soon.html">Coming Soon</a></li>
-                            <li><a class="dropdown-item" href="terms-and-conditions.html">T&C</a></li>
-                            <li><a class="dropdown-item" href="privacy-policy.html">Privacy Policy</a></li>
-                          </ul>
-                        </div>
+						  
+						  <?php } ?>
+                        
                       </div>
                     </li>
                   </ul>
@@ -138,7 +150,7 @@
                   
                 
                 <li class="nav-item">
-                  <a class="nav-link" href="contact-us.html">
+                  <a class="nav-link" href="Latest-News">
                     News
                   </a>
                 </li>
@@ -148,12 +160,34 @@
                     Contact Us 
                   </a>
                 </li>
+				  <li class="nav-item">
+          <?php if(isset($_SESSION['EmailUser'])){   ?>
+                  <a class="nav-link" href="contact-us.html" style="color: #88c250;">
+                    <?php echo $se_firstname." ".$se_lastname; ?> 
+                  </a>
+                  <?php }else{ ?>
+                    <a class="nav-link" href="contact-us.html">
+                    login 
+                  </a>
+                    <?php } ?>
+                </li>
 				  
               </ul>
+				<div class="add-listing d-none d-sm-block">
+        <?php if(isset($_SESSION['EmailUser'])){  $fun->Logout('sign-In');  ?>
+                <form method="POST">
+               
+               <button type="submit" name="logout" class="btn btn-secondory" ><i class="fa fa-sign-in-alt"></i>Logout</button>
+             
+                </form>
+              <?php }else{ ?>
+                   
+                <a class="btn btn-secondory" href="Sign-In"><i class="fa fa-sign-in-alt"></i>Login</a>
+
+              <?php } ?>
             </div>
-            <div class="add-listing d-none d-sm-block">
-              <a class="btn btn-secondory" href="#"><i class="fa fa-address-book"></i>Get Appointment</a>
             </div>
+            
           </nav>
         </div>
       </div>

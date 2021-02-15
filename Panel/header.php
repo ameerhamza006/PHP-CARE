@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!doctype html>
 <html class="no-js" lang="en">
 
@@ -64,6 +65,13 @@
 	$error = new errors();
 	
 	
+	
+	$s_doctor = $_SESSION['EmailDoctor'];
+	 $sesion= $crud->Update_get_by_id('users.id,users.firstname,users.lastname,users.email,users.phone,users.cityname,users.address,users.image,users.specialistname,users.state,users.zip,users.experience,users.bio,users.roller,links.facebook,links.twitter,links.instagram,links.linkedin,links.company,availability.monday,availability.tuesday,availability.wednesday,availability.thursday,availability.friday,availability.saturday,availability.sunday','users'," LEFT JOIN links ON users.id = links.user_id LEFT JOIN availability ON users.id = availability.user_id where users.email = '$s_doctor' "); 
+	
+	
+	
+	
 	?>
 </head>
 
@@ -77,18 +85,20 @@
         <div class="left-sidebar-pro">
             <nav id="sidebar">
                 <div class="sidebar-header">
-                    <a href="#"><img src="img/message/1.jpg" alt="" />
+                    <a href="Profile"><img src="../Doctor/<?php echo $sesion['firstname']." ".$sesion['lastname']."/".$sesion['image']; ?>" alt="" style="height: 100px;width: 100px;" />
                     </a>
-                    <h3>Andrar Son</h3>
-                    <p>Developer</p>
-                    <strong>AP+</strong>
+                    <h3><?php echo $sesion['firstname']." ".$sesion['lastname']; ?></h3>
+                    <p><?php echo $sesion['specialistname']." ".$sesion['roller']; ?></p>
+                    <strong><?php echo substr($sesion['firstname'],0,1); echo substr($sesion['lastname'],0,1); ?></strong>
                 </div>
                 <div class="left-custom-menu-adp-wrap">
                     <ul class="nav navbar-nav left-sidebar-menu-pro">
+					
                         <li class="nav-item">
                             <a href="index"  class="nav-link dropdown-toggle"><i class="fa big-icon fa-home"></i> <span class="mini-dn">Home</span> </a>
 							
                         </li>
+							<?php if($sesion['roller'] != "Doctor"){ ?>
                         <li class="nav-item"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="fa big-icon fa-envelope"></i> <span class="mini-dn">Doctors</span> <span class="indicator-right-menu mini-dn"><i class="fa indicator-mn fa-angle-left"></i></span></a>
                             <div role="menu" class="dropdown-menu left-menu-dropdown animated flipInX">
                                 <a href="Add-Doctor" class="dropdown-item">Add Doctor</a>
@@ -96,6 +106,7 @@
                                 
                             </div>
                         </li>
+						
                         <li class="nav-item"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="fa big-icon fa-flask"></i> <span class="mini-dn">Cities</span> <span class="indicator-right-menu mini-dn"><i class="fa indicator-mn fa-angle-left"></i></span></a>
                             <div role="menu" class="dropdown-menu left-menu-dropdown animated flipInX">
                                 <a href="Add-City" class="dropdown-item">Add City</a>
@@ -103,59 +114,47 @@
                                 
                             </div>
                         </li>
+						<?php } ?>
                         <li class="nav-item"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="fa big-icon fa-pie-chart"></i> <span class="mini-dn">Availability</span> <span class="indicator-right-menu mini-dn"><i class="fa indicator-mn fa-angle-left"></i></span></a>
                             <div role="menu" class="dropdown-menu left-menu-dropdown animated flipInX">
+								
                                 <a href="Availability" class="dropdown-item">Add Availability</a>
+								
                                 <a href="Availability?List" class="dropdown-item">View Availability</a>
                                 
                             </div>
                         </li>
+							<?php if($sesion['roller'] != "Doctor"){ ?>
                         <li class="nav-item"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="fa big-icon fa-bar-chart-o"></i> <span class="mini-dn">Social Links</span> <span class="indicator-right-menu mini-dn"><i class="fa indicator-mn fa-angle-left"></i></span></a>
                             <div role="menu" class="dropdown-menu left-menu-dropdown chart-left-menu-std animated flipInX">
+									
                                 <a href="Social-Links" class="dropdown-item">Add Social Links</a>
+								
                                 <a href="Social-Links?List" class="dropdown-item">View Social Links</a>
                                
                             </div>
                         </li>
-                        <li class="nav-item"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="fa big-icon fa-table"></i> <span class="mini-dn">Data Tables</span> <span class="indicator-right-menu mini-dn"><i class="fa indicator-mn fa-angle-left"></i></span></a>
+						
+                        <li class="nav-item"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="fa big-icon fa-table"></i> <span class="mini-dn">News</span> <span class="indicator-right-menu mini-dn"><i class="fa indicator-mn fa-angle-left"></i></span></a>
                             <div role="menu" class="dropdown-menu left-menu-dropdown animated flipInX">
-                                <a href="static-table.html" class="dropdown-item">Static Table</a>
-                                <a href="data-table.html" class="dropdown-item">Data Table</a>
+                                <a href="News" class="dropdown-item">Add News </a>
+                                <a href="News?List" class="dropdown-item">View News</a>
                             </div>
                         </li>
-                        <li class="nav-item"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="fa big-icon fa-edit"></i> <span class="mini-dn">Forms Elements</span> <span class="indicator-right-menu mini-dn"><i class="fa indicator-mn fa-angle-left"></i></span></a>
-                            <div role="menu" class="dropdown-menu left-menu-dropdown form-left-menu-std animated flipInX">
-                                <a href="basic-form-element.html" class="dropdown-item">Basic Elements</a>
-                                <a href="advance-form-element.html" class="dropdown-item">Advance Elements</a>
-                                <a href="password-meter.html" class="dropdown-item">Password Meter</a>
-                                <a href="multi-upload.html" class="dropdown-item">Multi Upload</a>
-                                <a href="tinymc.html" class="dropdown-item">Text Editor</a>
-                                <a href="dual-list-box.html" class="dropdown-item">Dual List Box</a>
+                       <?php } ?>
+						<li class="nav-item"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="fa big-icon fa-table"></i> <span class="mini-dn">Appointment</span> <span class="indicator-right-menu mini-dn"><i class="fa indicator-mn fa-angle-left"></i></span></a>
+                            <div role="menu" class="dropdown-menu left-menu-dropdown animated flipInX">
+                                
+                                <a href="News?List" class="dropdown-item">View Appointment</a>
                             </div>
                         </li>
-                        <li class="nav-item"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="fa big-icon fa-desktop"></i> <span class="mini-dn">App views</span> <span class="indicator-right-menu mini-dn"><i class="fa indicator-mn fa-angle-left"></i></span></a>
-                            <div role="menu" class="dropdown-menu left-menu-dropdown apps-left-menu-std animated flipInX">
-                                <a href="notifications.html" class="dropdown-item">Notifications</a>
-                                <a href="alerts.html" class="dropdown-item">Alerts</a>
-                                <a href="modals.html" class="dropdown-item">Modals</a>
-                                <a href="buttons.html" class="dropdown-item">Buttons</a>
-                                <a href="tabs.html" class="dropdown-item">Tabs</a>
-                                <a href="accordion.html" class="dropdown-item">Accordion</a>
-                                <a href="tab-menus.html" class="dropdown-item">Tab Menus</a>
+						<li class="nav-item"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="fa big-icon fa-table"></i> <span class="mini-dn">Feedback</span> <span class="indicator-right-menu mini-dn"><i class="fa indicator-mn fa-angle-left"></i></span></a>
+                            <div role="menu" class="dropdown-menu left-menu-dropdown animated flipInX">
+                                
+                                <a href="News?List" class="dropdown-item">View Feedback</a>
                             </div>
                         </li>
-                        <li class="nav-item"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="fa big-icon fa-files-o"></i> <span class="mini-dn">Pages</span> <span class="indicator-right-menu mini-dn"><i class="fa indicator-mn fa-angle-left"></i></span></a>
-                            <div role="menu" class="dropdown-menu left-menu-dropdown pages-left-menu-std animated flipInX">
-                                <a href="login.html" class="dropdown-item">Login</a>
-                                <a href="register.html" class="dropdown-item">Register</a>
-                                <a href="captcha.html" class="dropdown-item">Captcha</a>
-                                <a href="checkout.html" class="dropdown-item">Checkout</a>
-                                <a href="contact.html" class="dropdown-item">Contacts</a>
-                                <a href="review.html" class="dropdown-item">Review</a>
-                                <a href="order.html" class="dropdown-item">Order</a>
-                                <a href="comment.html" class="dropdown-item">Comment</a>
-                            </div>
-                        </li>
+                        
                     </ul>
                 </div>
             </nav>
@@ -325,11 +324,11 @@
                                         <li class="nav-item">
                                             <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle">
                                                 <span class="adminpro-icon adminpro-user-rounded header-riht-inf"></span>
-                                                <span class="admin-name">Advanda Cro</span>
+                                                <span class="admin-name"><?php echo $sesion['firstname']." ".$sesion['lastname']; ?></span>
                                                 <span class="author-project-icon adminpro-icon adminpro-down-arrow"></span>
                                             </a>
                                             <ul role="menu" class="dropdown-header-top author-log dropdown-menu animated flipInX">
-                                                <li><a href="#"><span class="adminpro-icon adminpro-home-admin author-log-ic"></span>My Account</a>
+                                                <li><a href="Profile"><span class="adminpro-icon adminpro-home-admin author-log-ic"></span>Edit Account</a>
                                                 </li>
                                                 <li><a href="#"><span class="adminpro-icon adminpro-user-rounded author-log-ic"></span>My Profile</a>
                                                 </li>
@@ -337,7 +336,11 @@
                                                 </li>
                                                 <li><a href="#"><span class="adminpro-icon adminpro-settings author-log-ic"></span>Settings</a>
                                                 </li>
-                                                <li><a href="#"><span class="adminpro-icon adminpro-locked author-log-ic"></span>Log Out</a>
+												<form method="post">
+                                                <li><?php $fun->Logout('../Sign-In'); ?>
+													<button type="submit" name="logout"><span na class="adminpro-icon adminpro-locked author-log-ic"></span>Log Out</button>
+													
+													</form>
                                                 </li>
                                             </ul>
                                         </li>

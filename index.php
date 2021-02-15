@@ -1,4 +1,8 @@
-<?php require_once "header.php"; ?>
+<?php require_once "header.php"; 
+
+
+
+?>
 
 
 	<!--=================================
@@ -377,79 +381,78 @@
         <div class="row justify-content-center">
           <div class="col-lg-10 text-center">
             <div class="section-title center-divider mb-5">
-              <span>Team of professional</span>
-              <h2>Our outstanding Team Is Active To Help You!</h2>
+              <span>Doctors of professional</span>
+              <?php if(isset($_SESSION['EmailUser'])){ ?>
+              <h2>Populer Doctors From Your City To Help You!</h2>
+              <?php }else{ ?>
+                <h2>Populer Doctors To Help You!</h2>
+              <?php } ?>
             </div>
           </div>
         </div>
       </div>
+    
+    
+
       <div class="container">
         <div class="row">
+        <?php 
+       if(isset($_SESSION['EmailUser'])){
+
+    $doc = $crud->View('*','users'," Where roller='Doctor' And cityname='$se_city' ",' ORDER  BY id DESC LIMIT 8 ');
+    
+    if($doc){
+
+      foreach($doc as $doctor){
+
+      $name = str_replace(' ','-',$doctor['firstname']);
+
+    ?>
           <div class="col-lg-3 col-md-6 mb-lg-0 mb-4">
             <!-- team-01 START -->
             <div class="team team-style-02">
               <div class="team-image">
-                <img class="img-fluid b-radius-bottom-none" src="images/team/01.jpg" alt="">
+                <img class="img-fluid b-radius-bottom-none" src="Doctor/<?php echo $doctor['firstname']." ".$doctor['lastname']."/".$doctor['image']; ?>" alt="" style="height: 255px;" >
               </div>
               <div class="team-detail b-radius-top-none">
-                <span class="team-label">Cardiologist</span>
-                <h4 class="team-title"><a href="team-single.html">Dr.Felica Queen</a></h4>
-                <span class="team-phone">+(704) 279-1249</span>
-                <span class="team-email">letstalk@medileaf.com</span>
+                <span class="team-label"><?php echo $doctor['specialistname']; ?></span>
+                <h4 class="team-title"><a href="Doctors?Profile=<?php echo $name ?>">Dr.<?php echo $doctor['firstname']." ".$doctor['lastname']; ?></a></h4>
+                <span class="team-phone"><?php echo $doctor['phone']; ?></span>
+                <span class="team-email"><?php echo $doctor['email']; ?></span>
               </div>
-              <a class="icon-btn" href="#"><i class="fas fa-plus"></i></a>
+              <a class="icon-btn" href="Doctors?Profile=<?php echo $name ?>"><i class="fas fa-plus"></i></a>
             </div>
             <!-- team-01 END -->
           </div>
-          <div class="col-lg-3 col-md-6 mb-lg-0 mb-4">
-            <!-- team-02 START -->
-            <div class="team team-style-02">
-              <div class="team-image">
-                <img class="img-fluid b-radius-bottom-none" src="images/team/02.jpg" alt="">
+          <?php } }else{ echo "<h5 class='col-lg-12 team-title text-center text-danger'>Sorry Unavailibal Doctors From Your City!</h5>"; } }else{ 
+            
+            
+    $doct = $crud->View('*','users'," Where roller='Doctor' ",' ORDER  BY id DESC LIMIT 8 ');
+    
+    foreach($doct as $doctor){
 
-              </div>
-              <div class="team-detail b-radius-top-none">
-                <span class="team-label">Neurologist</span>
-                <h4 class="team-title"><a href="team-single.html">Dr.Alice Williams</a></h4>
-                <span class="team-phone">+(704) 279-1249</span>
-                <span class="team-email">letstalk@medileaf.com</span>
-              </div>
-              <a class="icon-btn" href="#"><i class="fas fa-plus"></i></a>
-            </div>
-            <!-- team-02 END -->
-          </div>
-          <div class="col-lg-3 col-md-6 mb-md-0 mb-4">
-            <!-- team-03 START -->
+    $namee = str_replace(' ','-',$doctor['firstname']);
+
+            ?>
+             <div class="col-lg-3 col-md-6 mb-lg-0 mb-4">
+            <!-- team-01 START -->
             <div class="team team-style-02">
               <div class="team-image">
-                <img class="img-fluid b-radius-bottom-none" src="images/team/03.jpg" alt="">
+                <img class="img-fluid b-radius-bottom-none" src="Doctor/<?php echo $doctor['firstname']." ".$doctor['lastname']."/".$doctor['image']; ?>" alt="" style="height: 255px;" >
               </div>
               <div class="team-detail b-radius-top-none">
-                <span class="team-label">Physician Assistant</span>
-                <h4 class="team-title"><a href="team-single.html">Dr.Paul Flavius</a></h4>
-                <span class="team-phone">+(704) 279-1249</span>
-                <span class="team-email">letstalk@medileaf.com</span>
+                <span class="team-label"><?php echo $doctor['specialistname']; ?></span>
+                <h4 class="team-title"><a href="Doctors?Profile=<?php echo $namee ?>">Dr.<?php echo $doctor['firstname']." ".$doctor['lastname']; ?></a></h4>
+                <span class="team-phone"><?php echo $doctor['phone']; ?></span>
+                <span class="team-email"><?php echo $doctor['email']; ?></span>
               </div>
-              <a class="icon-btn" href="#"><i class="fas fa-plus"></i></a>
+              <a class="icon-btn" href="Doctors?Profile=<?php echo $namee ?>"><i class="fas fa-plus"></i></a>
             </div>
-            <!-- team-03 END -->
+            <!-- team-01 END -->
           </div>
-          <div class="col-lg-3 col-md-6">
-            <!-- team-03 START -->
-            <div class="team team-style-02">
-              <div class="team-image">
-                <img class="img-fluid b-radius-bottom-none" src="images/team/04.jpg" alt="">
-              </div>
-              <div class="team-detail b-radius-top-none">
-                <span class="team-label">Physician Assistant</span>
-                <h4 class="team-title"><a href="team-single.html">Dr.Michael Bean</a></h4>
-                <span class="team-phone">+(704) 279-1249</span>
-                <span class="team-email">letstalk@medileaf.com</span>
-              </div>
-              <a class="icon-btn" href="#"><i class="fas fa-plus"></i></a>
-            </div>
-            <!-- team-03 END -->
-          </div>
+
+          
+          <?php } } ?>
         </div>
       </div>
     </section>
@@ -553,84 +556,7 @@
         </div>
         <div class="row">
           <!-- Blog-01 START -->
-          <div class="col-lg-4 col-md-6">
-            <div class="blog-post blog-post-01">
-              <div class="blog-post-image mb-4">
-                <img class="img-fluid" src="images/blog/01.jpg" alt="">
-              </div>
-              <div class="blog-post-content py-0">
-                <div class="blog-post-details">
-                  <h6 class="blog-post-title"><a href="blog-detail.html">Coronavirus Disease 2020</a></h6>
-                  <div class="blog-post-meta">
-                    <div class="blog-post-author">
-                      <span> By <a href="#"> <img class="img-fluid" src="images/avatar/01.jpg" alt="">Alice Williams</a></span>
-                    </div>
-                    <div class="blog-post-time">
-                      <a href="#"><i class="far fa-clock text-primary"></i>25 Jan 2020</a>
-                    </div>
-                  </div>
-                  <div class="blog-post-description">
-                    <p>There’s nothing in this story to make us think he was dreaming about riches, vast or otherwise.</p>
-                    <a href="blog-detail.html" class="btn btn-link mb-2">Read More</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- Blog-01 END -->
-
-          <!-- Blog-02 START -->
-          <div class="col-lg-4 col-md-6">
-            <div class="blog-post blog-post-01">
-              <div class="blog-post-image mb-4">
-                <img class="img-fluid" src="images/blog/02.jpg" alt="">
-              </div>
-              <div class="blog-post-content py-0">
-                <div class="blog-post-details">
-                  <h6 class="blog-post-title"><a href="blog-detail.html">Six Information Signs Of Cancer</a></h6>
-                  <div class="blog-post-meta">
-                    <div class="blog-post-author">
-                      <span> By <a href="#"> <img class="img-fluid" src="images/avatar/02.jpg" alt="">Mellissa Doe</a></span>
-                    </div>
-                    <div class="blog-post-time">
-                      <a href="#"><i class="far fa-clock text-primary"></i>10 Feb 2020</a>
-                    </div>
-                  </div>
-                  <div class="blog-post-description">
-                    <p>Imagine reaching deep inside you for all the strength and wisdom that you need to make this decision today.</p>
-                    <a href="blog-detail.html" class="btn btn-link mb-2">Read More</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- Blog-02 END -->
-
-          <!-- Blog-03 START -->
-          <div class="col-lg-4 col-md-6">
-            <div class="blog-post blog-post-01">
-              <div class="blog-post-image mb-4">
-                <img class="img-fluid" src="images/blog/03.jpg" alt="">
-              </div>
-              <div class="blog-post-content py-0">
-                <div class="blog-post-details">
-                  <h6 class="blog-post-title"><a href="blog-detail.html">The loveliness of the youth</a></h6>
-                  <div class="blog-post-meta">
-                    <div class="blog-post-author">
-                      <span> By <a href="#"> <img class="img-fluid" src="images/avatar/03.jpg" alt="">Paul Flavius</a></span>
-                    </div>
-                    <div class="blog-post-time">
-                      <a href="#"> <i class="far fa-clock text-primary"></i>28 Feb 2020</a>
-                    </div>
-                  </div>
-                  <div class="blog-post-description">
-                    <p>This is perhaps the single biggest obstacle that all of us must overcome in order to be successful.</p>
-                    <a href="blog-detail.html" class="btn btn-link mb-2">Read More</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <?php $fun->News('LIMIT 3'); ?>
           <!-- Blog-03 END -->
         </div>
       </div>

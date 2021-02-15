@@ -103,6 +103,10 @@
     <script src="js/map/world_countries.js"></script>
     <script src="js/map/usa_states.js"></script>
     <script src="js/map/map-active.js"></script>
+
+<!--  dropzone JS
+		============================================ -->
+    <script src="js/dropzone.js"></script>
     <!-- data table JS
 		============================================ -->
     <script src="js/data-table/bootstrap-table.js"></script>

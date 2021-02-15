@@ -123,11 +123,22 @@ class functionality extends CRUD{
 		// when click on button
 		if(isset($_POST['doctorbtn']))
 		{
-			 
-			//for values to insert in table
-		 $values = "'".$_POST["fname"]."','".$_POST["lname"]."','".$_POST["email"]."','".$_POST["phone"]."','".$_POST["address"]."','".$_FILES["pic"]["name"]."','".$_POST["city"]."','".$_POST["state"]."','".$_POST["zip"]."','".$_POST["sp"]."','".$_POST["exp"]."','".$_POST["bio"]."','".$_POST["pass"]."','Doctor',NOW()";
+			 $values = "";
+			
+			//if pic not select
+			if($_FILES['pic']['name'] == '')
+			{
+				
+				 $values .= "'".$_POST["fname"]."','".$_POST["lname"]."','".$_POST["email"]."','".$_POST["phone"]."','".$_POST["address"]."',Null,'".$_POST["city"]."','".$_POST["state"]."','".$_POST["zip"]."','".$_POST["sp"]."','".$_POST["exp"]."','".$_POST["bio"]."','".$_POST["pass"]."','Doctor',NOW(),Null";
+				
+			//if pic selected
+			}else {
 			
 			
+		
+		 $values .= "'".$_POST["fname"]."','".$_POST["lname"]."','".$_POST["email"]."','".$_POST["phone"]."','".$_POST["address"]."','".$_FILES["pic"]["name"]."','".$_POST["city"]."','".$_POST["state"]."','".$_POST["zip"]."','".$_POST["sp"]."','".$_POST["exp"]."','".$_POST["bio"]."','".$_POST["pass"]."','Doctor',NOW(),Null";
+			
+			}
 			
 			//$v = mysqli_real_escape_string($this->connect,$values);
 			
@@ -167,9 +178,28 @@ class functionality extends CRUD{
 			// get id from url
 			 $get_id = $_GET['Edit'];
 			
+			$values = "";
 			
+			
+			
+			//if pic not select 
+			if($_FILES['pic']['name'] == '')
+			{
+				
 			//for update in table
-		 $values = "firstname='".$_POST["fname"]."',lastname='".$_POST["lname"]."',email='".$_POST["email"]."',phone='".$_POST["phone"]."',address='".$_POST["address"]."',cityname='".$_POST["city"]."',state='".$_POST["state"]."',zip='".$_POST["zip"]."',specialistname='".$_POST["sp"]."',experience='	".$_POST["exp"]."',bio='".$_POST["bio"]."',password='".$_POST["pass"]."'";
+		 $values .= "firstname='".$_POST["fname"]."',lastname='".$_POST["lname"]."',email='".$_POST["email"]."',phone='".$_POST["phone"]."',address='".$_POST["address"]."',cityname='".$_POST["city"]."',state='".$_POST["state"]."',zip='".$_POST["zip"]."',specialistname='".$_POST["sp"]."',experience='	".$_POST["exp"]."',bio='".$_POST["bio"]."',password='".$_POST["pass"]."',modify_date=NOW()";
+				
+			// if pic selected	
+			}else {
+				
+				 $values .= "firstname='".$_POST["fname"]."',lastname='".$_POST["lname"]."',email='".$_POST["email"]."',phone='".$_POST["phone"]."',address='".$_POST["address"]."',image='".$_FILES["pic"]['name']."',cityname='".$_POST["city"]."',state='".$_POST["state"]."',zip='".$_POST["zip"]."',specialistname='".$_POST["sp"]."',experience='	".$_POST["exp"]."',bio='".$_POST["bio"]."',password='".$_POST["pass"]."',modify_date=NOW()";
+				
+				
+				
+			}
+			
+			
+			
 			
 			// for new folder name
 			$fname = $_POST['fname'];
@@ -190,51 +220,9 @@ class functionality extends CRUD{
 			//remane path old to new
 			rename($path,$pathnew);
 			
-		     // for update doctor into table
-			$this->Update('users',$values," where id='$get_id' ",'Add-doctor?List&m');
-			
-		} //ifsset close
-		
-	} // Doctor-update Function close
-	
-	// Update Doctor image
-	function Update_doctor_img(){
-		
-		// when click on button
-		if(isset($_POST['updatedoctorimg']))
-		{
-		    // for get id from url	 
-			$get_id = $_GET['Edit-Img'];
-			
-			
-			//for insert values in table
-		 $values = "firstname='".$_POST["fname"]."',lastname='".$_POST["lname"]."',image='".$_FILES["pic"]['name']."'";
-			
-			
-			
-			//$v = mysqli_real_escape_string($this->connect,$values);
-			
-			// for create folder by Doctor name
-			$fname = $_POST['fname'];
-			$lname = $_POST['lname'];
-			
-			//for fetch old name Doctor
-			$data = $this->Update_get_by_id('*','users',"where id='$get_id'");
-			
-			//get doctor name from table
-			$oldfname = $data['firstname'];
-			$oldlname = $data['lastname'];
-			
-			//old path doctor
-			$path = "../Doctor/$oldfname $oldlname/";
-			
-			// create new path by doctor name
-			$pathnew = "../Doctor/$fname $lname/";
-			
-			//exicute path
-			rename($path,$pathnew);
-			
-			//get image name
+				
+		   
+				 //get image name
 			$img = $_FILES['pic']['name'];
 			//get old path from pc
 			$old_location = $_FILES['pic']['tmp_name'];
@@ -244,12 +232,13 @@ class functionality extends CRUD{
 			//move image into folder
 			move_uploaded_file($old_location,$new_location);
 			
-			// update Doctor
+		     // for update doctor into table
 			$this->Update('users',$values," where id='$get_id' ",'Add-doctor?List&m');
 			
 		} //ifsset close
 		
-	} // Doctor-update-image Function close
+	} // Doctor-update Function close
+	
 	
 	 // View Doctor
 	 function Doctor_list(){
@@ -279,6 +268,7 @@ class functionality extends CRUD{
 			<td>".$value['specialistname']."</td>
 			<td>".$value['experience']."</td>
 			<td>".$value['date']."</td>
+			<td>".$value['modify_date']."</td>
 			<td><a href='#'><img src='../Doctor/".$value['firstname']." " .$value['lastname']."/".$value['image']."' alt='' class='mCS_img_loaded'> </a></td>
 			
             <td class='datatable-ct'>
@@ -732,8 +722,434 @@ class functionality extends CRUD{
 	
 	
 	
-  //------------News CRUD End---------//
+	//------------News CRUD End---------//
+	
+	
+	
+	
+  //------------Specialities CRUD Start---------//
+	
+	
+	
+	function Add_Specialities(){
+		
+		if(isset($_POST['spadd'])){
+			
+			$values = "'".$_POST['sp']."'";
+			
+			$this->Add('specialities',$values,'Specialities?m');
+			
+			
+			
+			
+		}
+	}
+	
+	
+	// View Specialities
+	function Specialities_list(){
+		
+		//fetch all Specialities from table
+		$data = $this->View('*','Specialities','','ORDER BY id DESC');
+		
+		//if Specialities 
+		if($data){
+			
+		// for serial number	
+		$sno=1;
+			
+		//view all Specialities from table
+		foreach($data as $value){
+			
+			echo "  <tr>
+                                                    <td>".$sno++."</td>
+                                                    <td>".$value['specialitie_name']."</td>
+                                                    <td><a href='Specialities?Edit=".$value['id']."' class='btn btn-custon-two btn-primary btn-sm' >Edit</a></td>
+                                                    <td><a href='Specialities?Delete=".$value['id']."' class='btn btn-custon-two btn-danger btn-sm' >Delete</a></td>
+                                                </tr>";
+		} // foreach close
+		} // if close
+	} // city_list close
+	
+	
+	
+	// Delete Specialities
+	function Specialities_Delete(){
+		
+		//when get id from url
+		if(isset($_GET['Delete'])){
+			
+			// get id move to variable
+			$get_id = $_GET['Delete'];
+			
+			//delete Specialities from table
+			$this->Delete('specialities',$get_id,'Specialities?m');
+		} // ifisset close
+	} // Specialities_Delete close
+	
+	// Update Specialities
+	function Specialities_Update(){
+		
+		//when click on button
+		if(isset($_POST['updatesp'])){
+			
+				// get id move to variable
+			$get_id = $_GET['Edit'];
+			
+			//values for Specialities table
+			$values = "specialitie_name='".$_POST['sp']."'";
+			
+		  // update Specialities from table
+		  $this->Update('specialities',$values,"where id='$get_id'",'Specialities?m');
+		} // ifisset close
+	} // Specialities_update close
+	
+	
+	
+	
+  //------------Specialities CRUD End---------//
+	
+	
+	
+	
+//------------spasific Doctor View in website with his Specialisty Start for Doctors page ---------//	
+	
+	
+	
+	function View_Doctors_Specialities(){
+		
+		if(isset($_GET['Specialist'])){
+		
+		$get_Specialisty_name = $_GET['Specialist'];
+		
+		$dataa = $this->View('users.firstname,users.lastname,users.email,users.phone,users.cityname,users.address,users.image,users.specialistname,links.facebook,links.twitter,links.instagram,links.linkedin,links.company','users'," LEFT JOIN links ON users.id = links.user_id where users.specialistname = '$get_Specialisty_name' ",' ORDER BY users.id DESC '); 
+	
+		if($dataa){
+		
+		foreach($dataa as $specialist){
+			
+			
+			echo  "<div class='col-xl-3 col-lg-4 col-md-6 mb-4'>
+            <div class='team'>
+              <div class='team-image'>
+                <img class='img-fluid b-radius-bottom-none' src='Doctor/".$specialist['firstname']." ".$specialist['lastname']."/".$specialist['image']."' alt='' style='height: 280px;' >
+                <div class='team-social'>
+                  <ul>
+                    <li><a href='https://web.facebook.com/".$specialist['facebook']."/'><i class='fab fa-facebook-f'></i></a></li>
+                    <li><a href='https://twitter.com/".$specialist['twitter']."/'><i class='fab fa-twitter'></i></a></li>
+                    <li><a href='https://www.linkedin.com/in/".$specialist['linkedin']."/'><i class='fab fa-linkedin-in'></i></a></li>
+                    <li><a href='https://www.instagram.com/".$specialist['instagram']."/'><i class='fab fa-instagram'></i></a></li>
+                  </ul>
+                </div>
+              </div>
+              <div class='team-detail b-radius-top-none'>
+                <span class='team-label'>".$specialist['specialistname']."</span>
+                <h4 class='team-title'><a href='team-single.html'>Dr.".$specialist['firstname']." ".$specialist['lastname']."</a></h4>
+                <span class='team-phone'>".$specialist['phone']."</span>
+                <span class='team-email'>".$specialist['email']."</span>
+              </div>
+              <a class='icon-btn' href='Doctors?Profile=".$specialist['firstname']."'><i class='fas fa-plus'></i></a>
+            </div>
+          </div>";
+			
+		}
+		}
+		}
+		
+		
+	} //fun close
+	
+	
+	
+	function Appointment(){
+		
+		
+		$get_name =  $_GET['Profile'];
+		
+		if(isset($_POST['addopp'])){
+		
+		 $values = "'".$_POST["fname"]."','".$_POST["lname"]."','".$_POST["email"]."','".$_POST["phone"]."','".$_POST["address"]."','".$_POST["city"]."','".$_POST["state"]."','".$_POST["zip"]."','".$_POST["apdate"]."','".$_POST["aptime"]."','".$_POST["doctor_id"]."','".$_POST["user_id"]."',NOW()";
+		
+		
+			
+		$this->Add('appointment',$values,"Doctors?Profile=$get_name&m");
+		}
+		
+	}
+	
+	public $fv = '';
+	public $lv = '';
+	public $ev = '';
+	public $pv = '';
+	public $adv = '';
+	public $cv = '';
+	public $sv = '';
+	public $zv = '';
+	public $pasv = '';
 
+	
+	function Register(){
+		
+		
+		
+		if(isset($_POST['adduser'])){
+			
+			
+			$firstname = mysqli_real_escape_string($this->connect,$_POST['fname']);
+			$lastname = mysqli_real_escape_string($this->connect,$_POST['lname']);
+			$email = mysqli_real_escape_string($this->connect,$_POST['email']);
+			$phone = mysqli_real_escape_string($this->connect,$_POST['phone']);
+			$address = mysqli_real_escape_string($this->connect,$_POST['address']);
+			$city = mysqli_real_escape_string($this->connect,$_POST['city']);
+			$state = mysqli_real_escape_string($this->connect,$_POST['state']);
+			$zip = mysqli_real_escape_string($this->connect,$_POST['zip']);
+			$pass = mysqli_real_escape_string($this->connect,$_POST['pass']);
+			
+			
+			
+			//for required fileds
+			if(empty($firstname)){
+			    $this->fv = "First Name Is required";
+			}else if(empty($lastname)){
+				$this->lv = "Last Name Is required";
+			}else if(empty($email)){
+				$this->ev = "Email Is Required";
+			}else if(empty($phone)){
+				$this->pv = "Phone Is Reduired";
+			}else if(empty($address)){
+				$this->adv = "Address Is Required";
+			}else if(empty($city)){
+				$this->cv = "City Is Required";
+			}else if(empty($state)){
+				$this->sv = "State Is Required";
+			}else if(empty($zip)){
+				$this->zv = "Zip Is Required";
+			}else if(empty($pass)){
+				$this->pasv = "Password Is Required";
+			}else 
+			
+			// for number fields only Numaric value allow	
+			if(!preg_match("/^[0-9]*$/",$phone)){
+				$this->pv .= "Enter the Valid Phone Number";
+				
+			// for Email fields only email format value allow		
+			}else if(filter_var($email,FILTER_VALIDATE_EMAIL)){
+				$this->ev .= "Enter Valid Email Format";
+			}
+			else{
+			
+			$values = "'$firstname','$lastname','$email','$phone','$address','Null','$city','$state','$zip','Null','Null','Null','$pass','User',NOW(),Null";
+			
+			
+			$this->Add('users',$values,'Sign-Up?m');
+			}
+				
+		} // ifisset close
+		
+		
+	} // function close
+	
+	
+	
+	function login(){
+		
+		if(isset($_POST['login'])){
+			error_reporting(0);
+			session_start();
+
+			$email = mysqli_real_escape_string($this->connect,$_POST['email']);
+			$pass = mysqli_real_escape_string($this->connect,$_POST['pass']);
+			
+			
+			if(empty($email)){
+				$this->ev = "Email Is Required";
+			}else if(empty($pass)){
+				$this->pv = "Password Is Required";
+			}
+			
+			else{
+			
+			
+			$pemail = $this->Update_get_by_id('*','users'," where email='$email' ");
+			
+            if($pemail == ''){
+				echo "<script>location.href='Sign-In?m=Incorect-Email';</script>";
+			}
+
+			$ppassword = $this->Update_get_by_id('*','users'," where  password='$pass' ");
+			
+				if($ppassword == ''){
+					echo "<script>location.href='Sign-In?m=Incorect-Password';</script>";
+				}
+				
+				if($pemail != "" AND $ppassword != ""){
+
+				
+
+				$roler = $ppassword['roller'];
+			
+			if($roler == "Admin"){
+				$_SESSION['EmailDoctor'] = $email; 
+				echo "<script>location.href='Panel/';</script>";
+			}else if($roler == "Doctor"){
+				$_SESSION['EmailDoctor'] = $email;
+				echo "<script>location.href='Panel/';</script>";
+				
+			}else if($roler == "User"){
+				$_SESSION['EmailUser'] = $email;
+				echo "<script>location.href='".$previons = "javascript:history.go(-2)"."';</script>";
+			}
+		}
+			}
+			
+			
+		}
+	} // login function close
+	
+	
+	function Logout($link){
+
+       if(isset($_POST['logout'])){
+
+             session_start();
+
+			 session_destroy();
+
+			 echo "<script>location.href='$link';</script>";
+
+	   }
+
+	}
+
+
+	function News($limit){
+		
+		$n = $this->View('users.firstname,users.lastname,blog.id,blog.title,blog.bio,blog.image,blog.date',' users ',' INNER JOIN blog ON users.id = blog.user_id '," ORDER BY blog.id DESC $limit ");
+		
+		
+			
+			foreach($n as $value){
+				
+				$date = substr($value['date'],0,10);
+				$bio = substr($value['bio'],0,97);
+				$title_r = substr($value['title'],0,30);
+
+				$title = str_replace(" ","-",$value['title']);
+				
+			echo	"<div class='col-lg-4 col-md-6'>
+            <div class='blog-post blog-post-01'>
+              <div class='blog-post-image mb-4'>
+                <img class='img-fluid'9 src='News/".$value['image']."' alt='' style='height: 270px; width: 100%;' >
+              </div>
+              <div class='blog-post-content py-0'>
+                <div class='blog-post-details'>
+                  <h6 class='blog-post-title'><a href='Latest-News?News=$title'>$title_r..</a></h6>
+                  <div class='blog-post-meta'>
+                    <div class='blog-post-author'>
+                      <span> By <a href='#'>&nbsp;<b>".$value['firstname']." ".$value['lastname']."</b></a></span>
+                    </div>
+                    <div class='blog-post-time'>
+                      <a href='#'><i class='far fa-clock text-primary'></i>$date</a>
+                    </div>
+                  </div>
+                  <div class='blog-post-description'>
+                    <p>$bio..</p>
+                    <a href='Latest-News?News=$title' class='btn btn-link mb-2'>Read More</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>";
+				
+			}
+			
+		
+		
+	} //news function close
+	
+	
+	function Feedback(){
+		
+		if(isset($_POST['addfeed'])){
+			
+			$get_name = $_GET['Profile'];
+			
+			
+			
+			$feedback = mysqli_real_escape_string($this->connect,$_POST['feedback']);
+			$doctor_id = mysqli_real_escape_string($this->connect,$_POST['doctor_id']);
+			$user_id = mysqli_real_escape_string($this->connect,$_POST['user_id']);
+			
+			if(empty($feedback)){
+				
+				echo "Feedback is Required";
+			}else{
+			
+			$values = "'$feedback','$doctor_id','$user_id',Now()";
+			
+			$this->Add('doctor_feedback',$values,"Doctors?Profile=$get_name&f");
+				
+			}
+			
+		}
+		
+	} //feedback close
+	
+	
+	function Feedback_View(){
+		
+		$get_name = $_GET['Profile'];
+		
+		$get_id = $this->Update_get_by_id('*','users'," where firstname='$get_name' ");
+		
+		$data = $this->View(' users.firstname,users.lastname,doctor_feedback.feedback ',' users '," INNER JOIN doctor_feedback ON users.id = doctor_feedback.user_id where doctor_feedback.doctor_id='".$get_id['id']."' "," ORDER BY doctor_feedback.id DESC ");
+		
+		if($data){
+		
+		foreach($data as $feed){
+			
+		
+		
+		
+		echo "<div class='item'>
+                <div class='testimonial-item'>
+                  <!---<div class='testimonial-avatar'>
+                    <img class='img-fluid rounded-circle' src='images/avatar/09.jpg' alt=''>
+                  </div> -->
+                  <div class='testimonial-content'>
+				  ".$feed['feedback']."
+                  </div>
+                  <div class='testimonial-author'>
+                    <div class='testimonial-name'>
+                      <div class='testimonial-quote'>
+                        <i class='flaticon-left-quote'></i>
+                      </div>
+                      <h6 class='mb-1'>".$feed['firstname']." ".$feed['lastname']."</h6>
+                      <span>- Peteint.</span>
+                    </div>
+                  </div>
+                </div>
+              </div>";
+		}
+		}else{
+			
+			echo "<div class='item'>
+                <div class='testimonial-item'>
+                  
+                  <div class='testimonial-content text-center'>
+				  No Feedback About This Doctor!
+                  </div>
+                 
+                </div>
+              </div>";
+			
+		}
+		
+	}
+	
+	
+	
+//------------spasific Doctor View in website with his Specialisty End  Doctors page ---------//
 	
 	
 } // functionality class close
@@ -816,6 +1232,150 @@ class errors{
 		
 		
 	} // Find function close
+	
+	
+	
+	
+	
+	function Front_Find($Add,$add_error,$delete,$delete_error,$update,$update_error){
+		
+		//when get Added-Successfully from url
+		if(isset($_GET['m']) AND $_GET['m'] == "Added-Successfully"){
+			
+			echo "<blockquote class='blockquote bg-light mb-5'>
+                      <div class='blockquote-content'>
+                        <div class='blockquote-quote'></div>
+                        <div class='blockquote-author'>
+                          <div class='blockquote-name'>
+                            <h6 class='text-center' style='color: #006838 !important;'> $Add </h6>
+                         
+                          </div>
+                        </div>
+                      </div>
+                    </blockquote>";
+			
+			//when get Added-Error from url
+		}else if(isset($_GET['m']) AND $_GET['m'] == "Added-Error"){
+			
+		echo "<blockquote class='blockquote bg-light mb-5'>
+                      <div class='blockquote-content'>
+                        <div class='blockquote-quote'></div>
+                        <div class='blockquote-author'>
+                          <div class='blockquote-name'>
+                            <h6 class='text-center' style='color: #e00940 !important;'> $add_error </h6>
+                         
+                          </div>
+                        </div>
+                      </div>
+                    </blockquote>";
+				
+			//when get Delete-Error from url
+		}else if(isset($_GET['m']) AND $_GET['m'] == "Delete-Error"){
+			
+			echo "<blockquote class='blockquote bg-light mb-5'>
+                      <div class='blockquote-content'>
+                        <div class='blockquote-quote'></div>
+                        <div class='blockquote-author'>
+                          <div class='blockquote-name'>
+                            <h6 class='text-center' style='color: #e00940 !important;'> $delete_error </h6>
+                         
+                          </div>
+                        </div>
+                      </div>
+                    </blockquote>";
+			
+			
+			//when get Delete-Successfully from url
+		}else if(isset($_GET['m']) AND $_GET['m'] == "Delete-Successfully"){
+			
+			echo "<blockquote class='blockquote bg-light mb-5'>
+                      <div class='blockquote-content'>
+                        <div class='blockquote-quote'></div>
+                        <div class='blockquote-author'>
+                          <div class='blockquote-name'>
+                            <h6 class='text-center' style='color: #006838 !important;'> $delete </h6>
+                         
+                          </div>
+                        </div>
+                      </div>
+                    </blockquote>";
+			
+			
+			//when get Update-Error from url
+		}else if(isset($_GET['m']) AND $_GET['m'] == "Update-Error"){
+			
+			echo "<blockquote class='blockquote bg-light mb-5'>
+                      <div class='blockquote-content'>
+                        <div class='blockquote-quote'></div>
+                        <div class='blockquote-author'>
+                          <div class='blockquote-name'>
+                            <h6 class='text-center' style='color: #e00940 !important;'> $update_error </h6>
+                         
+                          </div>
+                        </div>
+                      </div>
+                    </blockquote>";
+			
+			
+			//when get Update-Successfully from url
+		}else if(isset($_GET['m']) AND $_GET['m'] == "Update-Successfully"){
+			
+			echo "<blockquote class='blockquote bg-light mb-5'>
+                      <div class='blockquote-content'>
+                        <div class='blockquote-quote'></div>
+                        <div class='blockquote-author'>
+                          <div class='blockquote-name'>
+                            <h6 class='text-center' style='color: #006838 !important;'> $update </h6>
+                         
+                          </div>
+                        </div>
+                      </div>
+                    </blockquote>";
+			
+		}
+		
+		
+		
+		
+	} // Find function close
+	
+	
+	function feed($Add,$Add_error,$Update,$Update_error,$Delete,$Delete_error){
+		
+		if(isset($_GET['f']) AND $_GET['f'] == "Added-Successfully"){
+			
+			echo "<blockquote class='blockquote bg-light mb-5'>
+                      <div class='blockquote-content'>
+                        <div class='blockquote-quote'></div>
+                        <div class='blockquote-author'>
+                          <div class='blockquote-name'>
+                            <h6 class='text-center' style='color: #006838 !important;'> $Add </h6>
+                         
+                          </div>
+                        </div>
+                      </div>
+                    </blockquote>";
+			
+		}else if(isset($_GET['f']) AND $_GET['f'] == "Added-Error"){
+			
+			echo "<blockquote class='blockquote bg-light mb-5'>
+                      <div class='blockquote-content'>
+                        <div class='blockquote-quote'></div>
+                        <div class='blockquote-author'>
+                          <div class='blockquote-name'>
+                            <h6 class='text-center' style='color: #e00940 !important;'> $Add_error </h6>
+                         
+                          </div>
+                        </div>
+                      </div>
+                    </blockquote>";
+			
+			
+			//when get Update-Successfully from url
+		}
+		
+	}
+	
 	
 } // Errors class close
 

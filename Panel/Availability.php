@@ -106,6 +106,7 @@ if(isset($_GET['List'])){
                                 <div class="sparkline16-graph">
 									<form method="post">
                                     <div class="date-picker-inner">
+									
 										 <div class="chosen-select-single mg-b-20">
                                                     <label></label>
                                                     <select name="doctor" class="select2_demo_3 form-control">
@@ -119,6 +120,7 @@ if(isset($_GET['List'])){
 														<?php } ?>
 											 </select>
 														</div>
+										
                                         <div class="form-group data-custon-pick data-custom-mg" id="data_5">
                                             <label>Monday <?php echo $data['monday']; ?></label>
                                             <div class="input-daterange input-group" id="datepicker">
@@ -224,6 +226,7 @@ if(isset($_GET['List'])){
                                 <div class="sparkline16-graph">
 									<form method="post">
                                     <div class="date-picker-inner">
+											<?php if($sesion['roller'] != "Doctor"){ ?>
 										
 										 <div class="chosen-select-single mg-b-20">
                                                     <label></label>
@@ -235,6 +238,7 @@ if(isset($_GET['List'])){
 														<?php } ?>
 											 </select>
 														</div>
+										<?php }else{ echo "<input type='hidden'  value='".$sesion['id']."' name='doctor'  />"; }?>
 										
 										
                                         <div class="form-group data-custon-pick data-custom-mg " id="data_5">
